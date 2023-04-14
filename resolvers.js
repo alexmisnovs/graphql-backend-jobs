@@ -18,7 +18,9 @@ export const resolvers = {
       //   },
       // ],
       Job.findAll(),
+    company: async (_parentObject, { id }) => await Company.findById(id),
   },
+
   Job: {
     company: async job => await Company.findById(job.companyId),
   },
