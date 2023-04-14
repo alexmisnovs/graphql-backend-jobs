@@ -2,7 +2,7 @@ import { Job, Company } from "./db.js";
 export const resolvers = {
   Query: {
     job: async (_parentObject, { id }) => {
-      return Job.findById(id);
+      return await Job.findById(id);
     },
     jobs: async () =>
       // [
