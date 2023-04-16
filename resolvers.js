@@ -1,5 +1,8 @@
 import { Job, Company } from "./db.js";
 export const resolvers = {
+  Mutation: {
+    createJob: async (_parentObject, { input }) => await Job.create(input),
+  },
   Query: {
     job: async (_parentObject, { id }) => {
       return await Job.findById(id);
