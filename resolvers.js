@@ -1,26 +1,21 @@
 import { Job, Company } from "./db.js";
 export const resolvers = {
   Mutation: {
-    createJob: async (_parentObject, { input }) => await Job.create(input),
-  },
-  Query: {
-    job: async (_parentObject, { id }) => {
-      return await Job.findById(id);
+    createJob: async (_root, { input }) => await Job.create(input),
+    deleteJob: async (_root, { id }) => await Job.delete(id),
+    updateJob: async (_root, args) => {
+      // console.log(args);
+      // usually I would need to find and update,
+      //but seems the fakebase can just update the record with the same ID
+      const job = await Job.findById(args.input.id);
+      console.log(job);
+      return await Job.update(args.input);
     },
-    jobs: async () =>
-      // [
-      //   {
-      //     id: "id1",
-      //     title: "Hello 1",
-      //     description: " This is description 1",
-      //   },
-      //   {
-      //     id: "id2",
-      //     title: "Hello 2",
-      //     description: " This is description 2",
-      //   },
-      // ],
-      Job.findAll(),
+  },
+
+  Query: {
+    job: async (_root, { id }) => await Job.findById(id),
+    jobs: async () => await Job.findAll(),
     company: async (_parentObject, { id }) => await Company.findById(id),
   },
 
